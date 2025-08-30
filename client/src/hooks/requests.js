@@ -15,10 +15,25 @@ async function httpGetLaunches() {
   });
 }
 
+// Submit given launch data to launch system.
 async function httpSubmitLaunch(launch) {
-  // TODO: Once API is ready.
-  // Submit given launch data to launch system.
+  try {
+    return await fetch(`${API_URL}/launches`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(launch),
+    });
+  } catch(err) {
+    return {
+      ok: false,
+    };
+  }
 }
+//Doing JSON.stringfy is necessay since we can't send JSON over the http sever it only understands 
+//byte(text) i.e searilized data therefore it's necessay to do here JSON.stringfy and then in the
+//backend we again do app.use(express.json()) which convert's it again in json data
 
 async function httpAbortLaunch(id) {
   // TODO: Once API is ready.

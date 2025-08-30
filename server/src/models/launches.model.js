@@ -1,11 +1,14 @@
 const launches= new Map();
 
+let latestFlightNumber=100;
+
 const launch={
     flightNumber: 100,
-    launchDate: new Date('22nd Jan 2026'),
+    launchDate: new Date('Janury 22, 2026'),
     mission: "Kelper mission",
     rocket: "space X",
     target: "KE144 B",
+    customer: ['Madhav'],
     upcoming: true,
     success: true,
 }
@@ -15,4 +18,17 @@ function getAllLaunches(){
     return Array.from(launches.values());
 }
 
-module.exports=getAllLaunches;
+function addNewLaunch(launch){
+    latestFlightNumber++;
+    launches.set(latestFlightNumber, Object.assign(launch,{
+        customer: ['Madhav'],
+        upcoming: true,
+        success: true,
+        flightNumber: latestFlightNumber,
+    }));
+}
+
+module.exports={
+    getAllLaunches,
+    addNewLaunch,
+};

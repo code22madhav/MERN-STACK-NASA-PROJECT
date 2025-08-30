@@ -16,11 +16,15 @@ app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname,"..","public")));
 
-app.use(planetRouter);
-app.use(launchRouter);
+app.use('/planets',planetRouter);
+app.use('/launches',launchRouter);
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
+
+//below comment doesn't works now don't know there is some changes in express 5 they have changed 
+//syntax for "*" catch therefore now I'm directly serving the index.html like a middleware 
+//kind of fallback only when no other route matches then render index.html
 
 //why to use "/*any" our front-end is served from the index.html file inside public and if we simply write '/'
 // it will send the index file at base route and even if we navigate throug the front-end it
