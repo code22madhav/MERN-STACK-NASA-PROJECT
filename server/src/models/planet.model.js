@@ -25,7 +25,6 @@ function loadPlanetData(){
             reject(err);
         })
         .on('end', ()=>{
-            console.log(`Habitable Planet data loaded`);
             resolve();
         })
     });

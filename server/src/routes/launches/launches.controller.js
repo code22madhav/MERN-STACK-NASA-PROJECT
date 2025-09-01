@@ -1,4 +1,4 @@
-const {getAllLaunches, addNewLaunch} = require('../../models/launches.model');
+const {getAllLaunches, addNewLaunch, exitsLaunchWithId, abortLaunchById} = require('../../models/launches.model');
 
 function httpGetLaunches(req,res){
     return res.status(200).json(getAllLaunches());
@@ -25,7 +25,19 @@ function httpaddNewLaunch(req,res){
 //launches.value is not an json it gives us an iterable value in map so we can use that value to form an
 //array it's like value for(const value of launches.value()){...} so we can use this value to form array
 
+function httpAbortLaunch(req,res){
+    let flightToBeDeleted=Number(req.params.id);
+    if(!exitsLaunchWithId(flightToBeDeleted)){
+        return res.status(404).json({
+            error: "Launch Information not found",
+        });
+    }
+    const abortedLaunch=abortLaunchById(flightToBeDeleted);
+    return res.status(200).json(abortedLaunch);
+}
+
 module.exports={
     httpGetLaunches,
     httpaddNewLaunch,
+    httpAbortLaunch,
 };
