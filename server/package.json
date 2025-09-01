@@ -4,7 +4,8 @@
   "description": "NASA MISSION CONTROL",
   "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test-watch": "jest --watch",
     "start": "set PORT=5000 && node src/server.js",
     "watch": "nodemon src/server.js"
   },
@@ -17,6 +18,8 @@
     "morgan": "^1.10.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "jest": "^30.1.2",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
   }
 }
