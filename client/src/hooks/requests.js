@@ -35,9 +35,16 @@ async function httpSubmitLaunch(launch) {
 //byte(text) i.e searilized data therefore it's necessay to do here JSON.stringfy and then in the
 //backend we again do app.use(express.json()) which convert's it again in json data
 
+
+// Delete launch with given ID.
 async function httpAbortLaunch(id) {
-  // TODO: Once API is ready.
-  // Delete launch with given ID.
+  try {
+    return await fetch(`${API_URL}/launches/${id}`,{
+      method: "delete",
+    })
+  } catch (error) {
+    return {ok: false};
+  }
 }
 
 export {
