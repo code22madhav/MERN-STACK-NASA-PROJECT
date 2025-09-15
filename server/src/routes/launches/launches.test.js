@@ -1,7 +1,15 @@
 const request=require("supertest");
 const app=require('../../app');
 
-describe('TEST Get Launches', () => { 
+const { connectDB, disconnectDB }=require('../../services/mongo');
+describe('Launches API', () => { 
+    beforeAll(async()=>{
+        await connectDB();
+    })
+    afterAll(async()=>{
+        disconnectDB();
+    })
+    describe('TEST Get Launches', () => { 
     test('It should respond with 200 success', async()=>{
         await request(app).get('/launches').expect(200).expect('Content-Type', /json/)
     });
@@ -18,18 +26,18 @@ describe('TEST Get Launches', () => {
         launchDate: new Date('Janury 22, 2026'),
         mission: "Kelper mission",
         rocket: "space X",
-        target: "KE144 B",
+        target: "Kepler-62 f",
     }
     const LaunchDatawithoutDate={
         mission: "Kelper mission",
         rocket: "space X",
-        target: "KE144 B",
+        target: "Kepler-62 f",
     }
     const DatawithInvalidLaunchData={
         launchDate: "Invalid date",
         mission: "Kelper mission",
         rocket: "space X",
-        target: "KE144 B",
+        target: "Kepler-62 f",
     }
     test('It should respond with 201 success', async()=>{
         //this part is to send request
@@ -71,3 +79,4 @@ describe('TEST Get Launches', () => {
         });
      })
   })
+ })
