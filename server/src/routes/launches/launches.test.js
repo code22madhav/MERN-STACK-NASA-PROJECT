@@ -1,6 +1,11 @@
 const request=require("supertest");
 const app=require('../../app');
 
+//we need to run the db before performing any test case therefore we used beforeAll to run db
+// reason being earlier our db was connecting from server.js but this test directly run
+// app.js therefore our bd was not starting therefore it's good practice to keep dbconnection
+//seprate and then call it before performing test.
+//also in package.json update the jest configuration add testEnvirnoment: Node
 const { connectDB, disconnectDB }=require('../../services/mongo');
 describe('Launches API', () => { 
     beforeAll(async()=>{
