@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {  
+  "scripts": {
     "server": "npm run watch --prefix server",
     "client": "npm start --prefix client",
     "watch": "concurrently \"npm run server\" \"npm run client\"",
