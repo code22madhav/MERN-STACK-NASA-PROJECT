@@ -7,9 +7,12 @@ const app=require('../../app');
 //seprate and then call it before performing test.
 //also in package.json update the jest configuration add testEnvirnoment: Node
 const { connectDB, disconnectDB }=require('../../services/mongo');
+const { loadPlanetData } = require("../../models/planet.model");
+
 describe('Launches API', () => { 
     beforeAll(async()=>{
         await connectDB();
+        await loadPlanetData();
     })
     afterAll(async()=>{
         disconnectDB();
