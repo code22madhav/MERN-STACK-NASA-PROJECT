@@ -1,22 +1,38 @@
+# ---- Build stage ----
+FROM node:lts-alpine AS builder
+
+WORKDIR /app
+
+# Install client deps (with devDependencies)
+COPY client/package*.json ./client/
+RUN npm install --prefix client
+
+# Making public so that ../server/public exists for react build
+RUN mkdir -p server/public
+
+# Copy client code
+COPY client ./client
+
+# Build React app into server/public
+RUN npm run build --prefix client
+
+
+# ---- Production stage ----
 FROM node:lts-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+# Install only server production deps
+COPY server/package*.json ./server/
+RUN npm install --omit=dev --prefix server
 
-COPY client/package*.json client/
-RUN npm run install-client --omit=dev
+# Copy server source code
+COPY server ./server
 
-COPY server/package*.json server/
-RUN npm run install-server --omit=dev
-
-COPY client/ client/
-RUN npm run build --prefix client
-
-COPY server/ server/
+# Copy built React app from builder
+COPY --from=builder /app/server/public ./server/public
 
 USER node
 
-CMD [ "npm", "start", "--prefix", "server" ]
-
 EXPOSE 5000
+CMD ["npm", "start", "--prefix", "server"]
